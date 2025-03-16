@@ -38,5 +38,4 @@ public class Catalog {
 
     @OneToMany(mappedBy = "catalog",fetch = FetchType.LAZY)
     private List<BookCatalog> books;
-
 }

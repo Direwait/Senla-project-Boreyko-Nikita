@@ -1,13 +1,12 @@
 package com.example.dto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +19,8 @@ public class CatalogDTO {
     @NotEmpty(message = "catalogTitle cannot be empty")
     private String catalogTitle;
 
-    private CatalogDTO catalogParent;
+    private Integer parentCatalogId;
+
+    private List<CatalogDTO> subCatalogs;
+
 }

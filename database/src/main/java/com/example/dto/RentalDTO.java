@@ -1,6 +1,7 @@
 package com.example.dto;
 
-import com.example.model.Book;
+import com.example.model.enums.RentalStatus;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,23 +15,21 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Data
-
 public class RentalDTO {
 
     private int rentalId;
 
-    @NotNull(message = "BookPublication cannot be null")
-    private UserDTO user;
+    private Integer userId;
 
-    @NotNull(message = "Book cannot be null")
-    private Book book;
+    @NotNull(message = "Book ID cannot be null")
+    private Integer bookId;
 
-    @NotNull(message = "rentalDate cannot be null")
+    private RentalStatus rentalStatus;
+
     private Date rentalDate;
 
-    @NotNull(message = "returnDate cannot be null")
-    private Date returnDate;
+    @Future(message = "Rental return date must be future")
+    private Date rentalReturnDate;
 
-    @NotNull(message = "actual cannot be null")
-    private Date actualReturnDate;
+    private Date rentalActualReturnDate;
 }

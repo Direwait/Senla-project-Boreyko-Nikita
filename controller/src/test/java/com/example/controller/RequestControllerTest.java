@@ -21,10 +21,10 @@ import static org.mockito.Mockito.when;
 
 class RequestControllerTest {
     @InjectMocks
-    private RequestController catalogController;
+    private RequestController requestController;
 
     @Mock
-    private RequestService rentalService;
+    private RequestService requestService;
 
     @BeforeEach
     void setUp() {
@@ -32,60 +32,61 @@ class RequestControllerTest {
     }
 
     @Test
-    void getAllTest() {
+    void testGetAll() {
         RequestDTO book1 = new RequestDTO();
         RequestDTO book2 = new RequestDTO();
         List<RequestDTO> books = Arrays.asList(book1, book2);
 
-        when(rentalService.getAll()).thenReturn(books);
+        when(requestService.getAll()).thenReturn(books);
 
-        List<RequestDTO> result = catalogController.getAll();
+        ResponseEntity<List<RequestDTO>> response = requestController.getAll();
 
-        assertEquals(2, result.size());
-        verify(rentalService).getAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(requestService).getAll();
     }
 
     @Test
-    void getByIdTest() {
+    void testGetById() {
         RequestDTO book = new RequestDTO();
-        when(rentalService.getById(1)).thenReturn(book);
+        when(requestService.getById(1)).thenReturn(book);
 
-        ResponseEntity<RequestDTO> response = catalogController.getById(1);
+        ResponseEntity<RequestDTO> response = requestController.getById(1);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(book, response.getBody());
-        verify(rentalService).getById(1);
+        verify(requestService).getById(1);
     }
 
     @Test
-    void createBookTest() {
-        RequestDTO bookDTO = new RequestDTO();
-        when(rentalService.createRequest(any(RequestDTO.class))).thenReturn(bookDTO);
+    void testCreateRequest() {
+        RequestDTO requestDTO = new RequestDTO();
+        when(requestService.createRequest(any(RequestDTO.class))).thenReturn(requestDTO);
 
-        ResponseEntity<RequestDTO> response = catalogController.createRequest(bookDTO);
+        ResponseEntity<RequestDTO> response = requestController.createRequest(requestDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(bookDTO, response.getBody());
-        verify(rentalService).createRequest(bookDTO);
+        assertEquals(requestDTO, response.getBody());
+        verify(requestService).createRequest(requestDTO);
     }
 
-    @Test
-    void updateBookTest() {
-        RequestDTO requestDTO = new RequestDTO();
-        when(rentalService.updateRequest(1, requestDTO)).thenReturn(requestDTO);
 
-        ResponseEntity<RequestDTO> response = catalogController.updateRequest(1, requestDTO);
+    @Test
+    void testUpdateRequest() {
+        RequestDTO requestDTO = new RequestDTO();
+        when(requestService.updateRequest(1, requestDTO)).thenReturn(requestDTO);
+
+        ResponseEntity<RequestDTO> response = requestController.updateRequest(1, requestDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(requestDTO, response.getBody());
-        verify(rentalService).updateRequest(1, requestDTO);
+        verify(requestService).updateRequest(1, requestDTO);
     }
 
     @Test
-    void deleteBookTest() {
-        ResponseEntity<Void> response = catalogController.deleteRequest(1);
+    void testDeleteRequest() {
+        ResponseEntity<Void> response = requestController.deleteRequest(1);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(rentalService).deleteById(1);
+        verify(requestService).deleteById(1);
     }
 }

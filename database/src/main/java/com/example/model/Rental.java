@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.model.enums.RentalStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,16 +35,20 @@ public class Rental {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rental_status")
+    private RentalStatus rentalStatus;
+
     @Column(name = "rental_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date rentalDate;
 
-    @Column(name = "return_date")
+    @Column(name = "rental_return_date")
     @Temporal(TemporalType.DATE)
-    private Date returnDate;
+    private Date rentalReturnDate;
 
-    @Column(name = "actual_return_date")
+    @Column(name = "rental_actual_return_date")
     @Temporal(TemporalType.DATE)
-    private Date actualReturnDate;
+    private Date rentalActualReturnDate;
 
 }

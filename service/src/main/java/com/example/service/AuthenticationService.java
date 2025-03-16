@@ -1,18 +1,21 @@
 package com.example.service;
 
-import com.example.Role;
-import com.example.dto.security.AuthenticationRequest;
-import com.example.dto.security.AuthenticationResponse;
-import com.example.dto.security.RegisterRequest;
-import com.example.jwt.JwtService;
 import com.example.model.User;
+import com.example.model.enums.Role;
 import com.example.repository.UserRepository;
+import com.example.security.dto.AuthenticationRequest;
+import com.example.security.dto.AuthenticationResponse;
+import com.example.security.dto.RegisterRequest;
+import com.example.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -27,9 +30,12 @@ public class AuthenticationService {
                 .userUsername(request.getUsername())
                 .userPassword(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .userRegistrationDate(new Date())
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+
+        log.info("User registered successfully || username: {} || role: {}", user.getUserUsername(), user.getRole());
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -40,9 +46,12 @@ public class AuthenticationService {
                 .userUsername(request.getUsername())
                 .userPassword(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ADMIN)
+                .userRegistrationDate(new Date())
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+
+        log.info("Admin registered successfully || username: {} || role: {}", user.getUserUsername(), user.getRole());
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -57,6 +66,8 @@ public class AuthenticationService {
         );
         var user = userRepository.findByUserUsername(request.getUsername()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+
+        log.info("User authenticated successfully || username: {} || role: {}", user.getUserUsername(), user.getRole());
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

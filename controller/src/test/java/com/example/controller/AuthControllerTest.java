@@ -1,8 +1,8 @@
 package com.example.controller;
 
-import com.example.dto.security.AuthenticationRequest;
-import com.example.dto.security.AuthenticationResponse;
-import com.example.dto.security.RegisterRequest;
+import com.example.security.dto.AuthenticationRequest;
+import com.example.security.dto.AuthenticationResponse;
+import com.example.security.dto.RegisterRequest;
 import com.example.service.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void register() {
+    void testRegister() {
         RegisterRequest registerRequest = new RegisterRequest();
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         when(authenticationService.register(any(RegisterRequest.class))).thenReturn(authenticationResponse);
@@ -42,7 +42,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void registerAdmin() {
+    void testRegisterAdmin() {
         RegisterRequest registerRequest = new RegisterRequest();
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         when(authenticationService.registerAdmin(any(RegisterRequest.class))).thenReturn(authenticationResponse);
@@ -54,7 +54,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void authenticate() {
+    void testAuthenticate() {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest();
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         when(authenticationService.authenticate(any(AuthenticationRequest.class))).thenReturn(authenticationResponse);

@@ -1,6 +1,7 @@
 package com.example.dto;
 
-import com.example.model.Book;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +15,11 @@ import java.util.Date;
 @Builder
 @Data
 public class RequestDTO {
+
     private int requestId;
-    private UserDTO user;
-    private Book book;
+
+    @NotNull(message = "Book ID cannot be null")
+    private int bookId;
+
     private Date requestDate;
-    private String requestStatus;
 }

@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.security.config;
 
 import com.example.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class UserDetailsConfig {
 
     private final UserRepository userRepository;
 

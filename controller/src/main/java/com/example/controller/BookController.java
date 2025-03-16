@@ -18,13 +18,12 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDTO> getAll() {
-        return bookService.getAll();
+    public ResponseEntity<List<BookDTO>> getAll() {
+        return ResponseEntity.ok(bookService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDTO> getById(@PathVariable Integer id
-    ) {
+    public ResponseEntity<BookDTO> getById(@PathVariable Integer id) {
         BookDTO bookDTO = bookService.getById(id);
         return ResponseEntity.ok(bookDTO);
     }

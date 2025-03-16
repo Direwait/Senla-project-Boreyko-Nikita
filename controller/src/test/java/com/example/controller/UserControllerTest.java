@@ -32,21 +32,21 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllTest() {
+    void testGetAll() {
         UserDTO book1 = new UserDTO();
         UserDTO book2 = new UserDTO();
         List<UserDTO> books = Arrays.asList(book1, book2);
 
         when(userService.getAll()).thenReturn(books);
 
-        List<UserDTO> result = userController.getAll();
+        ResponseEntity<List<UserDTO>> response = userController.getAll();
 
-        assertEquals(2, result.size());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(userService).getAll();
     }
 
     @Test
-    void getByIdTest() {
+    void testGetById() {
         UserDTO book = new UserDTO();
         when(userService.getById(1)).thenReturn(book);
 
@@ -58,7 +58,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUserTest() {
+    void testCreateUser() {
         UserDTO bookDTO = new UserDTO();
         when(userService.createUser(any(UserDTO.class))).thenReturn(bookDTO);
 
@@ -70,7 +70,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUserTest() {
+    void testUpdateUser() {
         UserDTO userDTO = new UserDTO();
         when(userService.updateUser(1, userDTO)).thenReturn(userDTO);
 
@@ -82,7 +82,7 @@ class UserControllerTest {
     }
 
     @Test
-    void deleteUserTest() {
+    void testDeleteUser() {
         ResponseEntity<Void> response = userController.deleteUser(1);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());

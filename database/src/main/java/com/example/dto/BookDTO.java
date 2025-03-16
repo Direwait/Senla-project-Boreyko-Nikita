@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,9 +30,11 @@ public class BookDTO {
     @NotEmpty(message = "BookIsbn cannot be empty")
     private String bookDescription;
 
+    @NotNull(message = "BookAvailable cannot be null")
     private boolean bookAvailable;
 
     @NotNull(message = "BookPublication cannot be null")
     private int bookQuantity;
-}
 
+    private List<RequestDTO> requests;
+}

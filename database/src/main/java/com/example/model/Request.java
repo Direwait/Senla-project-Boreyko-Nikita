@@ -33,10 +33,7 @@ public class Request {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @Column(name = "request_date", nullable = false)
+    @Column(name = "request_date")
     @Temporal(TemporalType.DATE)
     private Date requestDate;
-
-    @Column(name = "request_status")
-    private String requestStatus;
 }

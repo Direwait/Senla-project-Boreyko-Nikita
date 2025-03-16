@@ -9,81 +9,87 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class BookCatalogServiceTest {
 
+    @InjectMocks
+    private BookCatalogService bookCatalogService;
     @Mock
     private BookCatalogRepository bookCatalogRepository;
     @Mock
     private BookCatalogMapper bookCatalogMapper;
-    @InjectMocks
-    private BookCatalogService bookCatalogService;
 
     @Test
-    void getByIdTest() {
+    void testGetById() {
         Integer id = 1;
         BookCatalog book = new BookCatalog();
         BookCatalogDTO expectedDTO = new BookCatalogDTO();
 
-        Mockito.when(bookCatalogRepository.findById(id)).thenReturn(Optional.of(book));
-        Mockito.when(bookCatalogMapper.modelToDTO(book)).thenReturn(expectedDTO);
+        when(bookCatalogRepository.findById(id)).thenReturn(Optional.of(book));
+        when(bookCatalogMapper.modelToDTO(book)).thenReturn(expectedDTO);
 
         BookCatalogDTO result = bookCatalogService.getById(id);
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(expectedDTO, result);
-        Mockito.verify(bookCatalogRepository).findById(id);
-        Mockito.verify(bookCatalogMapper).modelToDTO(book);
+        verify(bookCatalogRepository).findById(id);
+        verify(bookCatalogMapper).modelToDTO(book);
     }
 
 
     @Test
-    void getAllTest() {
+    void testGetAll() {
         BookCatalog book1 = new BookCatalog();
         BookCatalog book2 = new BookCatalog();
         List<BookCatalog> books = List.of(book1, book2);
 
-        Mockito.when(bookCatalogRepository.findAll()).thenReturn(books);
-        Mockito.when(bookCatalogMapper.modelToDTO(Mockito.any(BookCatalog.class)))
+        when(bookCatalogRepository.findAll()).thenReturn(books);
+        when(bookCatalogMapper.modelToDTO(any(BookCatalog.class)))
                 .thenReturn(new BookCatalogDTO());
 
         List<BookCatalogDTO> result = bookCatalogService.getAll();
 
         Assertions.assertFalse(result.isEmpty());
-        Mockito.verify(bookCatalogRepository).findAll();
+        verify(bookCatalogRepository).findAll();
     }
 
     @Test
-    void deleteByIdTest() {
-        bookCatalogService.deleteById(Mockito.anyInt());
+    void testDeleteById() {
+        Integer requestId = 1;
+        when(bookCatalogRepository.existsById(requestId)).thenReturn(true);
 
-        Mockito.verify(bookCatalogRepository).deleteById(Mockito.anyInt());
+        bookCatalogService.deleteById(requestId);
+
+        verify(bookCatalogRepository).existsById(requestId);
+        verify(bookCatalogRepository).deleteById(requestId);
     }
 
     @Test
-    void createBookTest() {
+    void testCreateBookCatalog() {
         BookCatalogDTO requestDTO = new BookCatalogDTO();
         BookCatalog book = new BookCatalog();
         BookCatalog savedBook = new BookCatalog();
         BookCatalogDTO responseDTO = new BookCatalogDTO();
 
-        Mockito.when(bookCatalogMapper.dtoToModel(requestDTO)).thenReturn(book);
-        Mockito.when(bookCatalogRepository.save(book)).thenReturn(savedBook);
-        Mockito.when(bookCatalogMapper.modelToDTO(savedBook)).thenReturn(responseDTO);
+        when(bookCatalogMapper.dtoToModel(requestDTO)).thenReturn(book);
+        when(bookCatalogRepository.save(book)).thenReturn(savedBook);
+        when(bookCatalogMapper.modelToDTO(savedBook)).thenReturn(responseDTO);
 
         BookCatalogDTO result = bookCatalogService.createBookCatalog(requestDTO);
 
         Assertions.assertEquals(responseDTO, result);
-        Mockito.verify(bookCatalogMapper).dtoToModel(requestDTO);
-        Mockito.verify(bookCatalogRepository).save(book);
-        Mockito.verify(bookCatalogMapper).modelToDTO(savedBook);
+        verify(bookCatalogMapper).dtoToModel(requestDTO);
+        verify(bookCatalogRepository).save(book);
+        verify(bookCatalogMapper).modelToDTO(savedBook);
     }
 
     @Test
@@ -95,17 +101,17 @@ class BookCatalogServiceTest {
 
         var updatedBookCatalog = new BookCatalog();
 
-        Mockito.when(bookCatalogRepository.findById(1)).thenReturn(Optional.of(bookCatalog));
-        Mockito.when(bookCatalogMapper.modelToDTO(Mockito.any(BookCatalog.class))).thenReturn(bookCatalogDTO);
-        Mockito.when(bookCatalogRepository.save(Mockito.any(BookCatalog.class))).thenReturn(updatedBookCatalog);
+        when(bookCatalogRepository.findById(1)).thenReturn(Optional.of(bookCatalog));
+        when(bookCatalogMapper.modelToDTO(any(BookCatalog.class))).thenReturn(bookCatalogDTO);
+        when(bookCatalogRepository.save(any(BookCatalog.class))).thenReturn(updatedBookCatalog);
 
         BookCatalogDTO updatedBookDTO = bookCatalogService.updateBookCatalog(1, bookCatalogDTO);
 
         Assertions.assertNotNull(updatedBookDTO);
 
-        Mockito.verify(bookCatalogRepository).findById(1);
-        Mockito.verify(bookCatalogMapper).updateBookCatalogFromDTO(bookCatalogDTO, bookCatalog);
-        Mockito.verify(bookCatalogRepository).save(bookCatalog);
-        Mockito.verifyNoMoreInteractions(bookCatalogRepository, bookCatalogMapper);
+        verify(bookCatalogRepository).findById(1);
+        verify(bookCatalogMapper).updateBookCatalogFromDTO(bookCatalogDTO, bookCatalog);
+        verify(bookCatalogRepository).save(bookCatalog);
+        verifyNoMoreInteractions(bookCatalogRepository, bookCatalogMapper);
     }
 }

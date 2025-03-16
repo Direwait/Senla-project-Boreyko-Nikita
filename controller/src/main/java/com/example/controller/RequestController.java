@@ -18,8 +18,8 @@ public class RequestController {
     private final RequestService requestService;
 
     @GetMapping
-    public List<RequestDTO> getAll() {
-        return requestService.getAll();
+    public ResponseEntity<List<RequestDTO>> getAll() {
+        return ResponseEntity.ok(requestService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -30,8 +30,8 @@ public class RequestController {
 
     @PostMapping
     public ResponseEntity<RequestDTO> createRequest(@Valid @RequestBody RequestDTO RequestDTO) {
-        RequestDTO catalog = requestService.createRequest(RequestDTO);
-        return new ResponseEntity<>(catalog, HttpStatus.CREATED);
+        RequestDTO requestDTO = requestService.createRequest(RequestDTO);
+        return new ResponseEntity<>(requestDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

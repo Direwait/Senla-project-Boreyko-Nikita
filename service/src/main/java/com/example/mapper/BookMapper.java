@@ -10,9 +10,11 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-
     BookDTO modelToDTO(Book book);
 
+    @Mapping(target = "requests", ignore = true)
+    @Mapping(target = "rentals", ignore = true)
+    @Mapping(target = "catalogs", ignore = true)
     Book dtoToModel(BookDTO bookDTO);
 
     @Mapping(target = "bookId", ignore = true)

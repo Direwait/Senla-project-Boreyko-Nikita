@@ -23,22 +23,6 @@
 	<name>project_x</name>
 	<description>Demo project for Spring Boot</description>
 
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-
-	<developers>
-		<developer/>
-	</developers>
-
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-
 	<properties>
 		<java.version>23</java.version>
 		<springboot.version>3.4.2</springboot.version>
@@ -99,7 +83,6 @@
 				<artifactId>jjwt-jackson</artifactId>
 				<version>0.12.6</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
@@ -152,7 +135,7 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<configuration>
-						<mainClass>org.example.BootStart</mainClass>
+						<mainClass>com.example.ProjectXApplication</mainClass>
 						<excludes>
 							<exclude>
 								<groupId>org.projectlombok</groupId>

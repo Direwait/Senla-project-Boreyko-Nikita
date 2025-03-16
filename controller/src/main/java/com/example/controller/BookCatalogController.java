@@ -17,8 +17,8 @@ public class BookCatalogController {
     private final BookCatalogService bookCatalogService;
 
     @GetMapping
-    public List<BookCatalogDTO> getAll() {
-        return bookCatalogService.getAll();
+    public ResponseEntity<List<BookCatalogDTO>> getAll() {
+        return ResponseEntity.ok(bookCatalogService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -28,13 +28,13 @@ public class BookCatalogController {
     }
 
     @PostMapping
-    public ResponseEntity<BookCatalogDTO> createBook(@Valid @RequestBody BookCatalogDTO bookCatalogDTO) {
+    public ResponseEntity<BookCatalogDTO> createBookCatalog(@Valid @RequestBody BookCatalogDTO bookCatalogDTO) {
         BookCatalogDTO bookCatalog = bookCatalogService.createBookCatalog(bookCatalogDTO);
         return new ResponseEntity<>(bookCatalog, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookCatalogDTO> updateBook(
+    public ResponseEntity<BookCatalogDTO> updateBookCatalog(
             @PathVariable Integer id,
             @Valid @RequestBody BookCatalogDTO bookCatalogDTO
     ) {
@@ -43,7 +43,7 @@ public class BookCatalogController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteBookCatalog(@PathVariable Integer id) {
         bookCatalogService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

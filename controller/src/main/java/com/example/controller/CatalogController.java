@@ -18,8 +18,8 @@ public class CatalogController {
     private final CatalogService catalogService;
 
     @GetMapping
-    public List<CatalogDTO> getAll() {
-        return catalogService.getAll();
+    public ResponseEntity<List<CatalogDTO>> getAll() {
+        return ResponseEntity.ok(catalogService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -47,5 +47,11 @@ public class CatalogController {
     public ResponseEntity<Void> deleteCatalog(@PathVariable Integer id) {
         catalogService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/roots")
+    public ResponseEntity<List<CatalogDTO>> getRoots() {
+        return ResponseEntity.ok(catalogService.getAllRootCatalogs());
     }
 }

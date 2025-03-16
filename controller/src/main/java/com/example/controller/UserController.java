@@ -18,8 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserDTO> getAll() {
-        return userService.getAll();
+    public ResponseEntity<List<UserDTO>> getAll() {
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -30,17 +30,17 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO UserDTO) {
-        UserDTO catalog = userService.createUser(UserDTO);
-        return new ResponseEntity<>(catalog, HttpStatus.CREATED);
+        UserDTO userDTO = userService.createUser(UserDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(
             @PathVariable Integer id,
-            @Valid @RequestBody UserDTO UserDTO
+            @Valid @RequestBody UserDTO userDTO
     ) {
-        UserDTO updateBookCatalog = userService.updateUser(id, UserDTO);
-        return ResponseEntity.ok(updateBookCatalog);
+        UserDTO updateUser = userService.updateUser(id, userDTO);
+        return ResponseEntity.ok(updateUser);
     }
 
     @DeleteMapping("/{id}")

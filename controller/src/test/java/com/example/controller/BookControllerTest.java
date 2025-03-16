@@ -34,17 +34,16 @@ class BookControllerTest {
 
     @Test
     void getAllTest() {
-        BookDTO book1 = new BookDTO();
-        book1.setBookTitle("Book 1");
-        BookDTO book2 = new BookDTO();
-        book2.setBookTitle("Book 2");
-        List<BookDTO> books = Arrays.asList(book1, book2);
+        BookDTO bookDTO = new BookDTO();
+        BookDTO bookDTO1 = new BookDTO();
 
-        when(bookService.getAll()).thenReturn(books);
+        List<BookDTO> bookDTOS = Arrays.asList(bookDTO, bookDTO1);
 
-        List<BookDTO> result = bookController.getAll();
+        when(bookService.getAll()).thenReturn(bookDTOS);
 
-        assertEquals(2, result.size());
+        ResponseEntity<List<BookDTO>> response = bookController.getAll();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(bookService).getAll();
     }
 

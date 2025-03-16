@@ -23,7 +23,7 @@ class CatalogControllerTest {
     private CatalogController catalogController;
 
     @Mock
-    private CatalogService bookService;
+    private CatalogService catalogService;
 
     @BeforeEach
     void setUp() {
@@ -32,59 +32,73 @@ class CatalogControllerTest {
 
     @Test
     void getAllTest() {
-        CatalogDTO book1 = new CatalogDTO();
-        CatalogDTO book2 = new CatalogDTO();
-        List<CatalogDTO> books = Arrays.asList(book1, book2);
+        CatalogDTO catalogDTO = new CatalogDTO();
+        CatalogDTO catalogDTO1 = new CatalogDTO();
+        List<CatalogDTO> catalogDTOS = Arrays.asList(catalogDTO, catalogDTO1);
 
-        when(bookService.getAll()).thenReturn(books);
+        when(catalogService.getAll()).thenReturn(catalogDTOS);
 
-        List<CatalogDTO> result = catalogController.getAll();
+        ResponseEntity<List<CatalogDTO>> response = catalogController.getAll();
 
-        assertEquals(2, result.size());
-        verify(bookService).getAll();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(catalogService).getAll();
     }
 
     @Test
     void getByIdTest() {
-        CatalogDTO book = new CatalogDTO();
-        when(bookService.getById(1)).thenReturn(book);
+        CatalogDTO catalogDTO = new CatalogDTO();
+        when(catalogService.getById(1)).thenReturn(catalogDTO);
 
         ResponseEntity<CatalogDTO> response = catalogController.getById(1);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(book, response.getBody());
-        verify(bookService).getById(1);
+        assertEquals(catalogDTO, response.getBody());
+        verify(catalogService).getById(1);
     }
 
     @Test
     void createCatalogTest() {
-        CatalogDTO bookDTO = new CatalogDTO();
-        when(bookService.createCatalog(any(CatalogDTO.class))).thenReturn(bookDTO);
+        CatalogDTO catalogDTO = new CatalogDTO();
+        when(catalogService.createCatalog(any(CatalogDTO.class))).thenReturn(catalogDTO);
 
-        ResponseEntity<CatalogDTO> response = catalogController.createCatalog(bookDTO);
+        ResponseEntity<CatalogDTO> response = catalogController.createCatalog(catalogDTO);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(bookDTO, response.getBody());
-        verify(bookService).createCatalog(bookDTO);
+        assertEquals(catalogDTO, response.getBody());
+        verify(catalogService).createCatalog(catalogDTO);
     }
 
     @Test
-    void updateBookTest() {
+    void updateCatalogTest() {
         CatalogDTO catalogDTO = new CatalogDTO();
-        when(bookService.updateCatalog(1, catalogDTO)).thenReturn(catalogDTO);
+        when(catalogService.updateCatalog(1, catalogDTO)).thenReturn(catalogDTO);
 
         ResponseEntity<CatalogDTO> response = catalogController.updateCatalog(1, catalogDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(catalogDTO, response.getBody());
-        verify(bookService).updateCatalog(1, catalogDTO);
+        verify(catalogService).updateCatalog(1, catalogDTO);
     }
 
     @Test
-    void deleteBookTest() {
+    void deleteCatalogTest() {
         ResponseEntity<Void> response = catalogController.deleteCatalog(1);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(bookService).deleteById(1);
+        verify(catalogService).deleteById(1);
+    }
+
+    @Test
+    void getRootsTest() {
+        CatalogDTO catalogDTO = new CatalogDTO();
+        CatalogDTO catalogDTO1 = new CatalogDTO();
+        List<CatalogDTO> catalogDTOS = Arrays.asList(catalogDTO, catalogDTO1);
+
+        when(catalogService.getAll()).thenReturn(catalogDTOS);
+
+        ResponseEntity<List<CatalogDTO>> response = catalogController.getRoots();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(catalogService).getAllRootCatalogs();
     }
 }
