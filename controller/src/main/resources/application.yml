@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: project_x
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 22666
+    url: jdbc:postgresql://localhost:5432/project_x
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      format-sql: true
+      use_sql_comments: false
+      properties:
+        hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+        hibernate.cache.use_second_level_cache: true
+        hibernate.cache.region.factory_class: org.hibernate.cache.jcache.internal.JCacheRegionFactory
+        hibernate.javax.cache.provider: com.hazelcast.cache.HazelcastCachingProvider
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+  resources:
+    add-mappings: false
+  thymeleaf:
+    prefix:
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+    cache: false
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: logs.log
+    path: /
+
+jwt:
+  secret: 704c39bcad38e043fdfbcc23385d232dca5e4b1fe2cf8ed0a84267328d257a3a96e329958796d44db1e8a495483c87547072dde0c5c52bceb9019f0ea4271d747d10e25489efe7b4332772578fa1ade59b2a6cc51724056f8c0a3b133a5f673aa2c8d0a82d9e5e8b25df94f9df984eda73d59bf614cf73190796f3b8b889f2779669ff9980d6fadf0637e68f5554e6c51132e69fcf50afd787a2463f462260918f523a1ee544e68367695ab7b779357c750346d30914a89420ef2e9e2cc67efc692f0178565e92b32d2826f3c6d25cc11b60f70bc820a39494a7ad3b3c7c0d29ef82219a8c2990adafb7a36197924d57ceee1a413465f9fa05bdfece53fd56fc
+  lifetime: 30m
