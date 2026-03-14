@@ -1,0 +1,5 @@
+"./mvnw clean package" в пакете с приложением в Git Bash для упаковки.
+java -jar "C:\{yourPath}\controller\target\controller-0.0.1-SNAPSHOT.jar"
+
+либо "java -jar \controller\target\controller-0.0.1-SNAPSHOT.jar" в терминале с приложением
+
